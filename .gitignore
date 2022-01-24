@@ -1,0 +1,27 @@
+# OS generated files #
+######################
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Intellij #
+##########
+.idea/
+*.iml
+
+# VSCode #
+.vscode/
+
+# Others #
+##########
+bin/
+tmp/
+venv/
+*.tmp
+*.bak
+*.code-workspace
+*.zip
