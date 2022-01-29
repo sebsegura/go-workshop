@@ -11,7 +11,6 @@ import (
 // Si es necesario, dar una respuesta
 type Response = events.APIGatewayProxyResponse
 
-
 type Handler interface {
 	Create(ctx context.Context, req dto.Request) (Response, error)
 }

@@ -1,3 +1,5 @@
 package processor
 
-// TODO
+// TODO: interface & struct
+// TODO: Setup processor -> instanciar repository
+// TODO: Process
