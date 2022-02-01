@@ -1,8 +1,15 @@
 package repository
 
 import (
+	"github.com/aws/aws-sdk-go/aws"
+	"github.com/aws/aws-sdk-go/aws/session"
 	"github.com/aws/aws-sdk-go/service/dynamodb"
+	"github.com/aws/aws-sdk-go/service/dynamodb/dynamodbattribute"
 	"uala/go-workshop/pkg/dto"
+)
+
+const (
+	TableName = "Contacts"
 )
 
 type Repository interface {
@@ -15,16 +22,34 @@ type LambdaRepository struct {
 	svc       *dynamodb.DynamoDB
 }
 
-// TODO: Setup -> instanciar cliente dynamodb usando credentials en shared config
-func (r *LambdaRepository) Setup() {}
+func (r *LambdaRepository) Setup() {
+	r.TableName = TableName
 
-// TODO: Insert -> insertar un nuevo elemento en la tabla de dynamodb
+	sess := session.Must(session.NewSessionWithOptions(session.Options{
+		SharedConfigState: session.SharedConfigEnable,
+	}))
+
+	r.svc = dynamodb.New(sess)
+}
+
 func (r *LambdaRepository) Insert(contact dto.Contact) (dto.Contact, error) {
 	// Convert the Record Go type to dynamodb attribute value type using MarshalMap
+	item, err := dynamodbattribute.MarshalMap(contact)
+	if err != nil {
+		return dto.Contact{}, err
+	}
 
 	// Declare a new PutItemInput
+	input := &dynamodb.PutItemInput{
+		Item: item,
+		TableName: aws.String(r.TableName),
+	}
 
 	// Put new item into the dynamodb table
+	_, err = r.svc.PutItem(input)
+	if err != nil {
+		return dto.Contact{}, err
+	}
 
 	return contact, nil
 }
