@@ -36,19 +36,19 @@ func (r *LambdaRepository) Insert(contact dto.Contact) (dto.Contact, error) {
 	// Convert the Record Go type to dynamodb attribute value type using MarshalMap
 	item, err := dynamodbattribute.MarshalMap(contact)
 	if err != nil {
-		return dto.Contact{}, err
+		return dto.Contact{}, dto.InvalidInputError
 	}
 
 	// Declare a new PutItemInput
 	input := &dynamodb.PutItemInput{
-		Item: item,
+		Item:      item,
 		TableName: aws.String(r.TableName),
 	}
 
 	// Put new item into the dynamodb table
 	_, err = r.svc.PutItem(input)
 	if err != nil {
-		return dto.Contact{}, err
+		return dto.Contact{}, dto.InsertionError
 	}
 
 	return contact, nil
