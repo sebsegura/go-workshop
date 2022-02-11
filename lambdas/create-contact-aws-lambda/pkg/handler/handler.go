@@ -5,7 +5,6 @@ import (
 	"github.com/aws/aws-lambda-go/events"
 	"net/http"
 	"uala/go-workshop/internal/processor"
-	"uala/go-workshop/internal/repository"
 	"uala/go-workshop/pkg/dto"
 )
 
@@ -22,30 +21,56 @@ type LambdaHandler struct {
 	ContactProcessor processor.Processor
 }
 
-func NewHandler() Handler {
-	r := &repository.LambdaRepository{}
-	r.Setup()
-	p := processor.NewProcessor(r)
+func New(p processor.Processor) Handler {
 	return &LambdaHandler{
 		ContactProcessor: p,
 	}
 }
 
 func (h *LambdaHandler) Create(ctx context.Context, req dto.Request) (Response, error) {
-	// TODO: Do some dummy validation
-	if req.FirstName == "" || req.LastName == "" {
-		// error de validacion
+	if err := validateRequest(req); err != nil {
+		lambdaError := dto.LambdaError{
+			Code: dto.ValidationErrorCode,
+			Msg:  err.Error(),
+		}
+
 		return Response{
 			StatusCode: http.StatusBadRequest,
-			Body: dto.WrongRequestError.Error(),
+			Body: lambdaError.Error(),
 		}, nil
 	}
 
-	// TODO: Process
-	_, err := h.ContactProcessor.Process(req)
+	contact, err := h.ContactProcessor.Process(req)
 	if err != nil {
+		lambdaError := dto.LambdaError{
+			Code: dto.InternalServerErrorCode,
+			Msg:  err.Error(),
+		}
 
+		return Response{
+			StatusCode: http.StatusInternalServerError,
+			Body: lambdaError.Error(),
+		}, nil
 	}
 
-	return Response{}, nil
+	return Response{
+		StatusCode: http.StatusOK,
+		Body: contact.ToJsonStr(),
+	}, nil
+}
+
+func validateRequest(req dto.Request) error {
+	if req.FirstName == "" {
+		return &dto.ValidationError{
+			Field: "first_name",
+			Err:   dto.WrongRequestError,
+		}
+	}
+	if req.LastName == "" {
+		return &dto.ValidationError{
+			Field: "last_name",
+			Err:   dto.WrongRequestError,
+		}
+	}
+	return nil
 }

@@ -1,15 +1,11 @@
 package dto
 
 import (
+	"encoding/json"
 	"errors"
 	"fmt"
 )
 
-const (
-	ValidationError = iota
-	MalformedInputError
-	InternalServerError
-)
 
 var (
 	WrongRequestError = errors.New("invalid request")
@@ -17,12 +13,38 @@ var (
 	InsertionError    = errors.New("cannot insert a new item")
 )
 
+type DynamoDbError struct {
+	Op string
+	Err error
+}
+
+func (e *DynamoDbError) Error() string {
+	return fmt.Sprintf("%s: %s", e.Op, e.Err.Error())
+}
+
+type ValidationError struct {
+	Field string
+	Err error
+}
+
+func (e *ValidationError) Error() string {
+	return fmt.Sprintf("%s: %s", e.Field, e.Err.Error())
+}
+
+const (
+	ValidationErrorCode = iota
+	InternalServerErrorCode
+)
+
 type LambdaError struct {
-	ErrorCode  int `json:"error_code"`
-	HttpStatus int `json:"http_status"`
-	Err        error
+	Code int
+	Msg string
 }
 
 func (e *LambdaError) Error() string {
-	return fmt.Sprintf("code: %d, status: %d, msg: %s", e.ErrorCode, e.HttpStatus, e.Err.Error())
+	b, err := json.Marshal(e)
+	if err != nil {
+		return ""
+	}
+	return string(b)
 }
