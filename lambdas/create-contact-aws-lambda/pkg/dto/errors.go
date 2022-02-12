@@ -6,7 +6,6 @@ import (
 	"fmt"
 )
 
-
 var (
 	WrongRequestError = errors.New("invalid request")
 	InvalidInputError = errors.New("malformed input")
@@ -14,7 +13,7 @@ var (
 )
 
 type DynamoDbError struct {
-	Op string
+	Op  string
 	Err error
 }
 
@@ -24,7 +23,7 @@ func (e *DynamoDbError) Error() string {
 
 type ValidationError struct {
 	Field string
-	Err error
+	Err   error
 }
 
 func (e *ValidationError) Error() string {
@@ -38,7 +37,7 @@ const (
 
 type LambdaError struct {
 	Code int
-	Msg string
+	Msg  string
 }
 
 func (e *LambdaError) Error() string {

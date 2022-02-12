@@ -8,9 +8,6 @@ import (
 	"uala/go-workshop/pkg/dto"
 )
 
-// Responsibilidad: manejar el evento que dispara el lambda
-// Validar el input
-// Si es necesario, dar una respuesta
 type Response = events.APIGatewayProxyResponse
 
 type Handler interface {
@@ -36,7 +33,7 @@ func (h *LambdaHandler) Create(ctx context.Context, req dto.Request) (Response, 
 
 		return Response{
 			StatusCode: http.StatusBadRequest,
-			Body: lambdaError.Error(),
+			Body:       lambdaError.Error(),
 		}, nil
 	}
 
@@ -49,13 +46,13 @@ func (h *LambdaHandler) Create(ctx context.Context, req dto.Request) (Response, 
 
 		return Response{
 			StatusCode: http.StatusInternalServerError,
-			Body: lambdaError.Error(),
+			Body:       lambdaError.Error(),
 		}, nil
 	}
 
 	return Response{
 		StatusCode: http.StatusOK,
-		Body: contact.ToJsonStr(),
+		Body:       contact.ToJsonStr(),
 	}, nil
 }
 

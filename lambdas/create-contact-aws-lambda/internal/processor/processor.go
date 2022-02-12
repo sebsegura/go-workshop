@@ -1,41 +1,41 @@
 package processor
 
 import (
-	"uala/go-workshop/internal/repository"
+	db "github.com/seb7887/aws-lib/dynamodb"
 	"uala/go-workshop/internal/utils"
 	"uala/go-workshop/pkg/dto"
 )
 
 type Processor interface {
-	Process(req dto.Request) (dto.Contact, error)
+	Process(req dto.Request) (db.Contact, error)
 }
 
 type LambdaProcessor struct {
-	ContactRepository repository.Repository
+	ContactRepository db.ContactsRepository
 }
 
 const (
 	Created = "CREATED"
 )
 
-func New(r repository.Repository) Processor {
+func New(r db.ContactsRepository) Processor {
 	return &LambdaProcessor{
 		ContactRepository: r,
 	}
 }
 
-func (p *LambdaProcessor) Process(req dto.Request) (dto.Contact, error) {
-	contact := dto.Contact{
+func (p *LambdaProcessor) Process(req dto.Request) (db.Contact, error) {
+	contact := db.Contact{
 		ID:        utils.GenerateUUID(),
 		FirstName: req.FirstName,
 		LastName:  req.LastName,
 		Status:    Created,
 	}
 
-	item, err := p.ContactRepository.Insert(contact)
+	err := p.ContactRepository.PutItem(contact)
 	if err != nil {
-		return dto.Contact{}, err
+		return db.Contact{}, err
 	}
 
-	return item, nil
+	return contact, nil
 }
