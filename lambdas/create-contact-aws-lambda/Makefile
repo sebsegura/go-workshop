@@ -23,4 +23,13 @@ clean:
 zip: build
 	@zip -j $(FUNCTION).zip bin/$(FUNCTION)
 
+.PHONY: test
+test:
+	$(HOME)/go/bin/ginkgo -r --progress --failFast  --randomizeAllSpecs --randomizeSuites --failOnPending --trace --reportFile=./junit.xml -coverpkg=./... -coverprofile=coverage.out -outputdir=./test
+
+.PHONY: report
+report:test
+   	@go tool cover -html=./test/coverage.out -o ./test/coverage.html
+
+
 .PHONY: build

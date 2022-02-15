@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="UTF-8"?>
+  <testsuite name="Processor Suite" tests="2" failures="0" errors="0" time="0">
+      <testcase name="Test Procesor Happy path should process a request" classname="Processor Suite" time="0.000196208"></testcase>
+      <testcase name="Test Procesor Internal error path should return error if db operations fail" classname="Processor Suite" time="8.8916e-05"></testcase>
+  </testsuite>
