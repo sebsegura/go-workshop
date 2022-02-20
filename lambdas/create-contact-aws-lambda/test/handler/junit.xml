@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+  <testsuite name="Handler Suite" tests="3" failures="0" errors="0" time="0">
+      <testcase name="Handler Handler Validation error should return error if cannot validate request" classname="Handler Suite" time="6.6875e-05"></testcase>
+      <testcase name="Handler Handler Internal server error should return error if an internal error happens" classname="Handler Suite" time="0.00013225"></testcase>
+      <testcase name="Handler Handler Happy path should handle a request" classname="Handler Suite" time="9.1583e-05"></testcase>
+  </testsuite>
