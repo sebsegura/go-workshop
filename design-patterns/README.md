@@ -3,6 +3,12 @@
 ## Singleton
 Es un patrón de diseño creacional que garantiza que haya una unica instancia de un tipo en el programa entero.
 
+## Builder
+Es un patrón de diseño creacional para reutilizar un algoritmo para crear varias implementaciones de una interface.
+
+## Factory
+Es un patrón de diseño creacional para delegar la construcción de diferentes tipos de un objeto.
+
 ## Decorator
 Es un patrón de diseño estructural que permite añadir dinámicamente nuevos comportamientos a objetos colocándolos dentro de objetos especiales que los envuelven.
 
@@ -14,7 +20,5 @@ Es un patrón de diseño de comportamiento que permite el recorrido secuencial p
 
 ## Proxy
 
-## Builder
-Es un patrón de diseño creacional para reutilizar un algoritmo para crear varias implementaciones de una interface.
 
 ## Adapter

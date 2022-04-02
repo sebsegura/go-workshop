@@ -28,7 +28,7 @@ func (o *order) SetProcessed() {
 type OrderBuilder interface {
 	SetOrderId(id string) OrderBuilder
 	SetAmount(amount float64) OrderBuilder
-	SetEcommerceOrigin() OrderBuilder
+	SetOrigin(origin string) OrderBuilder
 	Build() Order
 }
 
@@ -48,8 +48,8 @@ func (b *orderBuilder) SetAmount(amount float64) OrderBuilder {
 	return b
 }
 
-func (b *orderBuilder) SetEcommerceOrigin() OrderBuilder {
-	b.origin = Ecommerce
+func (b *orderBuilder) SetOrigin(origin string) OrderBuilder {
+	b.origin = origin
 	return b
 }
 
@@ -68,7 +68,7 @@ func NewOrderBuilder() OrderBuilder {
 
 func main() {
 	builder := NewOrderBuilder()
-	order := builder.SetOrderId("1").SetAmount(100.9).SetEcommerceOrigin().Build()
+	order := builder.SetOrderId("1").SetAmount(100.9).SetOrigin(Ecommerce).Build()
 	fmt.Println(order)
 	order.SetProcessed()
 	fmt.Println(order)
