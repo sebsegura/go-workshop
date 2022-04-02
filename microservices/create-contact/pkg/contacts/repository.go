@@ -19,7 +19,7 @@ type ContactRepository interface {
 
 type contactsRepository struct {
 	table string
-	ddb *dynamodb.DynamoDB
+	ddb   *dynamodb.DynamoDB
 }
 
 func NewContactsRepository() ContactRepository {
@@ -27,7 +27,7 @@ func NewContactsRepository() ContactRepository {
 
 	return &contactsRepository{
 		table: ContactsTable,
-		ddb: ddb,
+		ddb:   ddb,
 	}
 }
 

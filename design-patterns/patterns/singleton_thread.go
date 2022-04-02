@@ -5,7 +5,9 @@ import (
 	"sync"
 )
 
-type single struct{}
+type single struct {
+	count int
+}
 
 var (
 	once           sync.Once
@@ -20,8 +22,12 @@ func getSingleInstance() *single {
 	return singleInstance
 }
 
+func (s *single) AddOne() int {
+	s.count++
+	return s.count
+}
+
 func main() {
-	for i := 0; i < 4; i++ {
-		getSingleInstance()
-	}
+	counter := getSingleInstance()
+	fmt.Println(counter.AddOne())
 }

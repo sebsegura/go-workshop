@@ -35,4 +35,3 @@ func (h *handler) CreateContact(w http.ResponseWriter, r *http.Request) {
 func validateRequest(req models.CreateContactRequest) bool {
 	return req.FirstName != "" && req.LastName != ""
 }
-

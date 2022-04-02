@@ -9,7 +9,7 @@ import (
 )
 
 const (
-	HealthEndpoint = "/health"
+	HealthEndpoint   = "/health"
 	ContactsEndpoint = "/contacts"
 )
 
@@ -21,17 +21,17 @@ type Server interface {
 
 func New(addr string) http.Server {
 	return http.Server{
-		Addr: addr,
+		Addr:    addr,
 		Handler: router(),
 	}
 }
 
 func router() http.Handler {
 	var (
-		r = mux.NewRouter()
+		r          = mux.NewRouter()
 		repository = contacts.NewContactsRepository()
-		service = contacts.NewContactsService(repository)
-		handler = handlers.New(service)
+		service    = contacts.NewContactsService(repository)
+		handler    = handlers.New(service)
 	)
 
 	r.HandleFunc(HealthEndpoint, handler.GetHealth).Methods(http.MethodGet)
@@ -39,4 +39,3 @@ func router() http.Handler {
 
 	return r
 }
-

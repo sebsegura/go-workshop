@@ -16,7 +16,7 @@ import (
 func main() {
 	var (
 		serverPort = config.GetConfig().Port
-		httpAddr = fmt.Sprintf(":%d", serverPort)
+		httpAddr   = fmt.Sprintf(":%d", serverPort)
 	)
 
 	logger.Setup()

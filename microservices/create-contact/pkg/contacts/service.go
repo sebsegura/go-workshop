@@ -25,7 +25,7 @@ func NewContactsService(r ContactRepository) ContactService {
 
 func (s *contactService) CreateContact(req models.CreateContactRequest) (models.Contact, error) {
 	contact := models.Contact{
-		Uuid:      uuid.GetUUID(),
+		ID:        uuid.GetUUID(),
 		FirstName: req.FirstName,
 		LastName:  req.LastName,
 		Status:    Created,

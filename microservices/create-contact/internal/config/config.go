@@ -10,8 +10,9 @@ import (
 )
 
 type Configuration struct {
-	Port int `env:"PORT" default:"8080" json:"port"`
+	Port     int    `env:"PORT" default:"8080" json:"port"`
 	LogLevel string `env:"LOG_LEVEL" default:"INFO" json:"logLevel"`
+	Endpoint string `env:"ENDPOINT" default:"" json:"endpoint"`
 }
 
 var config *Configuration

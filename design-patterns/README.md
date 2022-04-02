@@ -1,7 +1,7 @@
 # Patrones de diseño en Go
 
 ## Singleton
-Es un patrón de diseño creacional que garantiza que tan solo exista un objeto de su tipo y proporciona un único punto de acceso a él para cualquier otro código.
+Es un patrón de diseño creacional que garantiza que haya una unica instancia de un tipo en el programa entero.
 
 ## Decorator
 Es un patrón de diseño estructural que permite añadir dinámicamente nuevos comportamientos a objetos colocándolos dentro de objetos especiales que los envuelven.
@@ -15,5 +15,6 @@ Es un patrón de diseño de comportamiento que permite el recorrido secuencial p
 ## Proxy
 
 ## Builder
+Es un patrón de diseño creacional para reutilizar un algoritmo para crear varias implementaciones de una interface.
 
 ## Adapter
